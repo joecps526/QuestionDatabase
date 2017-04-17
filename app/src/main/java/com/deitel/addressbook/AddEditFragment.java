@@ -94,7 +94,10 @@ public class AddEditFragment extends Fragment
    @Override
    public View onCreateView(
            //TODO DATA JAVA->NEW JAVA->LAYOUT->ADDEDIT->DETAILED category, title, body, rating, status
-           //TODO RATING BAR, STATUS PAGE
+           //TODO RATING BAR, STATUS PAGE, build based on add/edit fragment
+           //https://github.com/DreaminginCodeZH/MaterialRatingBar
+           //status =  checkbox
+           //use linear layout
       LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
       super.onCreateView(inflater, container, savedInstanceState);
