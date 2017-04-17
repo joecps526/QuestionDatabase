@@ -16,6 +16,8 @@
    <string name="label_question">Question:</string>
    <string name="label_photo">Photo:</string>
    <string name="label_select_photo">Select Photo</string>
+   <string name="label_rating">Rating</string>
+   <string name="label_status">Status:</string>
    <string name="confirm_title">Are You Sure?</string>
    <string name="confirm_message">This will permanently delete the question</string>
    <string name="button_cancel">Cancel</string>

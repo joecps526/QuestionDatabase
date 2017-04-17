@@ -79,7 +79,7 @@
           android:layout_row="3"/>
 
       <TextView
-         android:id="@+id/streetLabelTextView"
+         android:id="@+id/titleLabelTextView"
          style="@style/ContactLabelTextView"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
          android:layout_row="4"/>
 
       <TextView
-         android:id="@+id/cityLabelTextView"
+         android:id="@+id/questionLabelTextView"
          style="@style/ContactLabelTextView"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -116,6 +116,8 @@
           android:text="@string/label_photo"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_column="0"
+          android:layout_row="6"
           android:gravity="left|center"
           android:id="@+id/photoLabelTextView" />
 
@@ -124,5 +126,37 @@
           android:layout_height="wrap_content"
           android:src="@mipmap/ic_launcher"
           android:id="@+id/ivImage"/>
+
+      <TextView
+          android:id="@+id/ratingTextView"
+          style="@style/ContactTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_column="1"
+          android:layout_row="7"/>
+
+      <TextView
+          android:text="@string/label_rating"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/ratingLabelTextView"
+          android:layout_column="0"
+          android:layout_row="7"/>
+
+      <TextView
+          android:id="@+id/statusTextView"
+          style="@style/ContactTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_column="1"
+          android:layout_row="8"/>
+
+      <TextView
+          android:text="@string/label_status"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/statusLabelTextView"
+          android:layout_column="0"
+          android:layout_row="8"/>
    </GridLayout>
 </ScrollView>

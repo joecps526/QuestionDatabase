@@ -219,10 +219,8 @@ public class AddEditFragment extends Fragment
          questionTextInputLayout.getEditText().getText().toString());
 
       //default value of rating to 0 and status to 0
-      contentValues.put(Contact.COLUMN_RATING,
-              0);
-      contentValues.put(Contact.COLUMN_STATUS,
-              0);
+      contentValues.put(Contact.COLUMN_RATING,Integer.parseInt("0"));
+      contentValues.put(Contact.COLUMN_STATUS,Integer.parseInt("0"));
 
       //JOE: Create a utility class
       DbBitmapUtility converter = new DbBitmapUtility();

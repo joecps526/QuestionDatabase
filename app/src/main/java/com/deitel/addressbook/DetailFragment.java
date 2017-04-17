@@ -49,6 +49,8 @@ public class DetailFragment extends Fragment
    private TextView titleTextView; // displays contact's street
    private TextView questionTextView; // displays contact's city
    private ImageView ivImage;
+    private TextView ratingTextView; // displays contact's street
+    private TextView statusTextView; // displays contact's city
 
    // set DetailFragmentListener when fragment attached
    @Override
@@ -90,6 +92,8 @@ public class DetailFragment extends Fragment
       titleTextView = (TextView) view.findViewById(R.id.titleTextView);
       questionTextView = (TextView) view.findViewById(R.id.questionTextView);
       ivImage = (ImageView) view.findViewById(R.id.ivImage);
+       ratingTextView = (TextView) view.findViewById(R.id.ratingTextView);
+       statusTextView = (TextView) view.findViewById(R.id.statusTextView);
 
 
       // load the contact
@@ -197,6 +201,8 @@ public class DetailFragment extends Fragment
          int questionIndex = data.getColumnIndex(Contact.COLUMN_QUESTION);
          //JOE: get the column index
          int photoIndex = data.getColumnIndex(Contact.COLUMN_PHOTO);
+          int ratingIndex = data.getColumnIndex(Contact.COLUMN_RATING);
+          int statusIndex = data.getColumnIndex(Contact.COLUMN_STATUS);
 
          // fill TextViews with the retrieved data
          nameTextView.setText(data.getString(nameIndex));
@@ -210,6 +216,18 @@ public class DetailFragment extends Fragment
          DbBitmapUtility converter = new DbBitmapUtility();
          ivImage.setImageBitmap(
                  converter.getImage(data.getBlob(photoIndex)));
+
+            //JOE: get rating and status
+          ratingTextView.setText(Integer.toString(data.getInt(ratingIndex)));
+
+          if (data.getInt(statusIndex) == 1)
+          {
+              statusTextView.setText("Closed");
+          }
+          else
+          {
+              statusTextView.setText("Open");
+          }
       }
    }
 
