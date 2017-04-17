@@ -13,9 +13,9 @@ import android.net.Uri;
 import com.deitel.addressbook.R;
 import com.deitel.addressbook.data.DatabaseDescription.Contact;
 
-public class AddressBookContentProvider extends ContentProvider {
+public class QuestionDatabaseContentProvider extends ContentProvider {
    // used to access the database
-   private AddressBookDatabaseHelper dbHelper;
+   private QuestionDatabaseDatabaseHelper dbHelper;
 
    // UriMatcher helps ContentProvider determine operation to perform
    private static final UriMatcher uriMatcher =
@@ -36,11 +36,11 @@ public class AddressBookContentProvider extends ContentProvider {
          Contact.TABLE_NAME, CONTACTS);
    }
 
-   // called when the AddressBookContentProvider is created
+   // called when the QuestionDatabaseContentProvider is created
    @Override
    public boolean onCreate() {
-      // create the AddressBookDatabaseHelper
-      dbHelper = new AddressBookDatabaseHelper(getContext());
+      // create the QuestionDatabaseDatabaseHelper
+      dbHelper = new QuestionDatabaseDatabaseHelper(getContext());
       return true; // ContentProvider successfully created
    }
 

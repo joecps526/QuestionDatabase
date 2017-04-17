@@ -63,11 +63,10 @@ public class AddEditFragment extends Fragment
    private TextInputLayout nameTextInputLayout;
    private TextInputLayout phoneTextInputLayout;
    private TextInputLayout emailTextInputLayout;
-   private TextInputLayout streetTextInputLayout;
-   private TextInputLayout cityTextInputLayout;
-   private TextInputLayout stateTextInputLayout;
-   private TextInputLayout zipTextInputLayout;
+   private TextInputLayout titleTextInputLayout;
+   private TextInputLayout questionTextInputLayout;
    private FloatingActionButton saveContactFAB;
+   private Spinner dropDown;
 
    private CoordinatorLayout coordinatorLayout; // used with SnackBars
 
@@ -95,6 +94,7 @@ public class AddEditFragment extends Fragment
    @Override
    public View onCreateView(
            //TODO DATA JAVA->NEW JAVA->LAYOUT->ADDEDIT->DETAILED category, title, body, rating, status
+           //TODO RATING BAR, STATUS PAGE
       LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
       super.onCreateView(inflater, container, savedInstanceState);
@@ -111,19 +111,15 @@ public class AddEditFragment extends Fragment
          (TextInputLayout) view.findViewById(R.id.phoneTextInputLayout);
       emailTextInputLayout =
          (TextInputLayout) view.findViewById(R.id.emailTextInputLayout);
-      streetTextInputLayout =
-         (TextInputLayout) view.findViewById(R.id.streetTextInputLayout);
-      cityTextInputLayout =
-         (TextInputLayout) view.findViewById(R.id.cityTextInputLayout);
-      stateTextInputLayout =
-         (TextInputLayout) view.findViewById(R.id.stateTextInputLayout);
-      zipTextInputLayout =
-         (TextInputLayout) view.findViewById(R.id.zipTextInputLayout);
+      titleTextInputLayout =
+         (TextInputLayout) view.findViewById(R.id.titleTextInputLayout);
+      questionTextInputLayout =
+         (TextInputLayout) view.findViewById(R.id.questionTextInputLayout);
 
       //drop down list declaration
-      Spinner dropdown = (Spinner) view.findViewById(R.id.spinnerCategory);
+      dropDown = (Spinner) view.findViewById(R.id.spinnerCategory);
       ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.category));
-      dropdown.setAdapter(adapter);
+      dropDown.setAdapter(adapter);
 
       //take photo declaration
       btnSelect = (Button) view.findViewById(R.id.btnSelectPhoto);
@@ -213,14 +209,21 @@ public class AddEditFragment extends Fragment
          phoneTextInputLayout.getEditText().getText().toString());
       contentValues.put(Contact.COLUMN_EMAIL,
          emailTextInputLayout.getEditText().getText().toString());
-      contentValues.put(Contact.COLUMN_STREET,
-         streetTextInputLayout.getEditText().getText().toString());
-      contentValues.put(Contact.COLUMN_CITY,
-         cityTextInputLayout.getEditText().getText().toString());
-      contentValues.put(Contact.COLUMN_STATE,
-         stateTextInputLayout.getEditText().getText().toString());
-      contentValues.put(Contact.COLUMN_ZIP,
-         zipTextInputLayout.getEditText().getText().toString());
+
+      //get value from drop down list
+      contentValues.put(Contact.COLUMN_CATEGORY,
+              dropDown.getSelectedItem().toString());
+      contentValues.put(Contact.COLUMN_TITLE,
+         titleTextInputLayout.getEditText().getText().toString());
+      contentValues.put(Contact.COLUMN_QUESTION,
+         questionTextInputLayout.getEditText().getText().toString());
+
+      //default value of rating to 0 and status to 0
+      contentValues.put(Contact.COLUMN_RATING,
+              0);
+      contentValues.put(Contact.COLUMN_STATUS,
+              0);
+
       //JOE: Create a utility class
       DbBitmapUtility converter = new DbBitmapUtility();
       //JOE: Get currently saved image
@@ -232,7 +235,7 @@ public class AddEditFragment extends Fragment
 
       if (addingNewContact) {
          // use Activity's ContentResolver to invoke
-         // insert on the AddressBookContentProvider
+         // insert on the QuestionDatabaseContentProvider
          Uri newContactUri = getActivity().getContentResolver().insert(
             Contact.CONTENT_URI, contentValues);
 
@@ -248,7 +251,7 @@ public class AddEditFragment extends Fragment
       }
       else {
          // use Activity's ContentResolver to invoke
-         // insert on the AddressBookContentProvider
+         // insert on the QuestionDatabaseContentProvider
          int updatedRows = getActivity().getContentResolver().update(
             contactUri, contentValues, null, null);
 
@@ -291,10 +294,9 @@ public class AddEditFragment extends Fragment
          int nameIndex = data.getColumnIndex(Contact.COLUMN_NAME);
          int phoneIndex = data.getColumnIndex(Contact.COLUMN_PHONE);
          int emailIndex = data.getColumnIndex(Contact.COLUMN_EMAIL);
-         int streetIndex = data.getColumnIndex(Contact.COLUMN_STREET);
-         int cityIndex = data.getColumnIndex(Contact.COLUMN_CITY);
-         int stateIndex = data.getColumnIndex(Contact.COLUMN_STATE);
-         int zipIndex = data.getColumnIndex(Contact.COLUMN_ZIP);
+         int titleIndex = data.getColumnIndex(Contact.COLUMN_TITLE);
+         int questionIndex = data.getColumnIndex(Contact.COLUMN_QUESTION);
+
          //JOE: get the column index
          int photoIndex = data.getColumnIndex(Contact.COLUMN_PHOTO);
 
@@ -305,14 +307,10 @@ public class AddEditFragment extends Fragment
             data.getString(phoneIndex));
          emailTextInputLayout.getEditText().setText(
             data.getString(emailIndex));
-         streetTextInputLayout.getEditText().setText(
-            data.getString(streetIndex));
-         cityTextInputLayout.getEditText().setText(
-            data.getString(cityIndex));
-         stateTextInputLayout.getEditText().setText(
-            data.getString(stateIndex));
-         zipTextInputLayout.getEditText().setText(
-            data.getString(zipIndex));
+         titleTextInputLayout.getEditText().setText(
+            data.getString(titleIndex));
+         questionTextInputLayout.getEditText().setText(
+            data.getString(questionIndex));
          //JOE: set retrieved image
          //JOE: Create a utility class
          DbBitmapUtility converter = new DbBitmapUtility();

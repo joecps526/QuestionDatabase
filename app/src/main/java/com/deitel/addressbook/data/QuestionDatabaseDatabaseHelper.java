@@ -8,12 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.deitel.addressbook.data.DatabaseDescription.Contact;
 
-class AddressBookDatabaseHelper extends SQLiteOpenHelper {
+class QuestionDatabaseDatabaseHelper extends SQLiteOpenHelper {
    private static final String DATABASE_NAME = "QuestionDatabase.db";
    private static final int DATABASE_VERSION = 1;
 
    // constructor
-   public AddressBookDatabaseHelper(Context context) {
+   public QuestionDatabaseDatabaseHelper(Context context) {
       super(context, DATABASE_NAME, null, DATABASE_VERSION);
    }
 
@@ -29,11 +29,7 @@ class AddressBookDatabaseHelper extends SQLiteOpenHelper {
          Contact.COLUMN_EMAIL + " TEXT, " +
          Contact.COLUMN_CATEGORY + " TEXT, " +
          Contact.COLUMN_TITLE + " TEXT, " +
-         Contact.COLUMN_BODY + " TEXT, " +
-         Contact.COLUMN_STREET + " TEXT, " +
-         Contact.COLUMN_CITY + " TEXT, " +
-         Contact.COLUMN_STATE + " TEXT, " +
-         Contact.COLUMN_ZIP + " TEXT, " +
+         Contact.COLUMN_QUESTION + " TEXT, " +
          Contact.COLUMN_PHOTO + " BLOB, " +
          Contact.COLUMN_RATING + " INT, " +
          Contact.COLUMN_STATUS + " INT);" ;

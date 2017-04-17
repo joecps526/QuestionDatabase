@@ -29,13 +29,9 @@ public class DatabaseDescription {
 
       public static final String COLUMN_PHONE = "phone";
       public static final String COLUMN_EMAIL = "email";
-      public static final String COLUMN_STREET = "street";
-      public static final String COLUMN_CITY = "city";
-      public static final String COLUMN_STATE = "state";
-      public static final String COLUMN_ZIP = "zip";
       public static final String COLUMN_CATEGORY = "category";
       public static final String COLUMN_TITLE = "title";
-      public static final String COLUMN_BODY = "body";
+      public static final String COLUMN_QUESTION = "question";
        public static final String COLUMN_PHOTO = "photo";
        public static final String COLUMN_RATING = "rating";
        public static final String COLUMN_STATUS = "status";

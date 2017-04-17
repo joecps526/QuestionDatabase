@@ -23,7 +23,7 @@
         </activity>
 
         <provider
-            android:name=".data.AddressBookContentProvider"
+            android:name=".data.QuestionDatabaseContentProvider"
             android:authorities="com.deitel.addressbook.data"
             android:enabled="true"
             android:exported="false" >

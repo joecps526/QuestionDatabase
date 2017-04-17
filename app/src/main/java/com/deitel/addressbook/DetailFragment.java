@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.deitel.addressbook.data.DatabaseDescription.Contact;
@@ -44,10 +45,9 @@ public class DetailFragment extends Fragment
    private TextView nameTextView; // displays contact's name
    private TextView phoneTextView; // displays contact's phone
    private TextView emailTextView; // displays contact's email
-   private TextView streetTextView; // displays contact's street
-   private TextView cityTextView; // displays contact's city
-   private TextView stateTextView; // displays contact's state
-   private TextView zipTextView; // displays contact's zip
+   private TextView categoryTextView;
+   private TextView titleTextView; // displays contact's street
+   private TextView questionTextView; // displays contact's city
    private ImageView ivImage;
 
    // set DetailFragmentListener when fragment attached
@@ -86,11 +86,11 @@ public class DetailFragment extends Fragment
       nameTextView = (TextView) view.findViewById(R.id.nameTextView);
       phoneTextView = (TextView) view.findViewById(R.id.phoneTextView);
       emailTextView = (TextView) view.findViewById(R.id.emailTextView);
-      streetTextView = (TextView) view.findViewById(R.id.streetTextView);
-      cityTextView = (TextView) view.findViewById(R.id.cityTextView);
-      stateTextView = (TextView) view.findViewById(R.id.stateTextView);
-      zipTextView = (TextView) view.findViewById(R.id.zipTextView);
+      categoryTextView = (TextView) view.findViewById(R.id.categoryTextView);
+      titleTextView = (TextView) view.findViewById(R.id.titleTextView);
+      questionTextView = (TextView) view.findViewById(R.id.questionTextView);
       ivImage = (ImageView) view.findViewById(R.id.ivImage);
+
 
       // load the contact
       getLoaderManager().initLoader(CONTACT_LOADER, null, this);
@@ -146,7 +146,7 @@ public class DetailFragment extends Fragment
                      DialogInterface dialog, int button) {
 
                      // use Activity's ContentResolver to invoke
-                     // delete on the AddressBookContentProvider
+                     // delete on the QuestionDatabaseContentProvider
                      getActivity().getContentResolver().delete(
                         contactUri, null, null);
                      listener.onContactDeleted(); // notify listener
@@ -192,10 +192,9 @@ public class DetailFragment extends Fragment
          int nameIndex = data.getColumnIndex(Contact.COLUMN_NAME);
          int phoneIndex = data.getColumnIndex(Contact.COLUMN_PHONE);
          int emailIndex = data.getColumnIndex(Contact.COLUMN_EMAIL);
-         int streetIndex = data.getColumnIndex(Contact.COLUMN_STREET);
-         int cityIndex = data.getColumnIndex(Contact.COLUMN_CITY);
-         int stateIndex = data.getColumnIndex(Contact.COLUMN_STATE);
-         int zipIndex = data.getColumnIndex(Contact.COLUMN_ZIP);
+         int categoryIndex = data.getColumnIndex(Contact.COLUMN_CATEGORY);
+         int titleIndex = data.getColumnIndex(Contact.COLUMN_TITLE);
+         int questionIndex = data.getColumnIndex(Contact.COLUMN_QUESTION);
          //JOE: get the column index
          int photoIndex = data.getColumnIndex(Contact.COLUMN_PHOTO);
 
@@ -203,10 +202,9 @@ public class DetailFragment extends Fragment
          nameTextView.setText(data.getString(nameIndex));
          phoneTextView.setText(data.getString(phoneIndex));
          emailTextView.setText(data.getString(emailIndex));
-         streetTextView.setText(data.getString(streetIndex));
-         cityTextView.setText(data.getString(cityIndex));
-         stateTextView.setText(data.getString(stateIndex));
-         zipTextView.setText(data.getString(zipIndex));
+         categoryTextView.setText(data.getString(categoryIndex));
+         titleTextView.setText(data.getString(titleIndex));
+         questionTextView.setText(data.getString(questionIndex));
          //JOE: set retrieved image
          //JOE: Create a utility class
          DbBitmapUtility converter = new DbBitmapUtility();

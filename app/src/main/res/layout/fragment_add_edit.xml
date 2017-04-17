@@ -80,13 +80,13 @@
          <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/streetTextInputLayout">
+             android:id="@+id/titleTextInputLayout">
 
             <EditText
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:id="@+id/editText4"
-               android:hint="@string/hint_street"
+               android:hint="@string/hint_title"
                android:imeOptions="actionNext"
                android:inputType="textCapWords|textPostalAddress"/>
          </android.support.design.widget.TextInputLayout>
@@ -94,51 +94,24 @@
          <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cityTextInputLayout">
+            android:id="@+id/questionTextInputLayout">
 
             <EditText
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:id="@+id/editText5"
-               android:hint="@string/hint_city"
+               android:hint="@string/hint_question"
                android:imeOptions="actionNext"
                android:inputType="textCapWords|textPostalAddress"/>
          </android.support.design.widget.TextInputLayout>
 
-         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/stateTextInputLayout">
-
-            <EditText
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:id="@+id/editText6"
-               android:hint="@string/hint_state"
-               android:imeOptions="actionNext"
-               android:inputType="textPostalAddress|textCapCharacters"/>
-         </android.support.design.widget.TextInputLayout>
-
-         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/zipTextInputLayout">
-
-            <EditText
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:id="@+id/editText7"
-               android:hint="@string/hint_zip"
-               android:imeOptions="actionDone"
-               android:inputType="number"/>
-         </android.support.design.widget.TextInputLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                <TextView
-                   android:text="Photo"
+                   android:text="@string/label_photo"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:id="@+id/photoTextView"
@@ -146,7 +119,7 @@
                    android:textSize="18sp" />
 
                <Button
-                   android:text="Select Photo"
+                   android:text="@string/label_select_photo"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:id="@+id/btnSelectPhoto"
