@@ -1,0 +1,29 @@
+package com.deitel.addressbook;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.ByteArrayOutputStream;
+
+import static android.graphics.Bitmap.CompressFormat.PNG;
+
+/**
+ * Created by pschung7 on 2017-04-14.
+ */
+
+public class DbBitmapUtility {
+
+    // convert from bitmap to byte array
+    public static byte[] getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        //Specify format in the first argument
+        bitmap.compress(PNG, 0, stream);
+        return stream.toByteArray();
+    }
+
+    // convert from byte array to bitmap
+    public static Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
+}
+
