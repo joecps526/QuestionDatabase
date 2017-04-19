@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.deitel.addressbook.data.DatabaseDescription.Contact;
 
-class QuestionDatabaseDatabaseHelper extends SQLiteOpenHelper {
+public class QuestionDatabaseDatabaseHelper extends SQLiteOpenHelper {
    private static final String DATABASE_NAME = "QuestionDatabase.db";
    private static final int DATABASE_VERSION = 1;
 

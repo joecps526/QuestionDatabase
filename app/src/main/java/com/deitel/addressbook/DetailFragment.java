@@ -39,6 +39,9 @@ public class DetailFragment extends Fragment
 
       // pass Uri of contact to edit to the DetailFragmentListener
       void onEditContact(Uri contactUri);
+
+       // pass Uri of contact to rate the DetailFragmentListener
+       void onRatingClicked(Uri contactUri);
    }
 
    private static final int CONTACT_LOADER = 0; // identifies the Loader
@@ -59,6 +62,7 @@ public class DetailFragment extends Fragment
    private TextView timeClosedTextView;
     private TextView timeElapsedTextView;
     public final SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+    private int idQuestion;
     // set DetailFragmentListener when fragment attached
    @Override
    public void onAttach(Context context) {
@@ -128,6 +132,9 @@ public class DetailFragment extends Fragment
          case R.id.action_delete:
             deleteContact();
             return true;
+          case R.id.action_rating:
+              listener.onRatingClicked(contactUri); // pass Uri to listener
+              return true;
       }
 
       return super.onOptionsItemSelected(item);
@@ -216,6 +223,7 @@ public class DetailFragment extends Fragment
           int timeAskedIndex = data.getColumnIndex(Contact.COLUMN_TIME_ASKED);
           int timeClosedIndex = data.getColumnIndex(Contact.COLUMN_TIME_CLOSED);
           int timeElapsedIndex = data.getColumnIndex(Contact.COLUMN_TIME_ELAPSED);
+          idQuestion = data.getColumnIndex(Contact._ID);
 
          // fill TextViews with the retrieved data
          nameTextView.setText(data.getString(nameIndex));
@@ -271,6 +279,10 @@ public class DetailFragment extends Fragment
 
       }
    }
+    public int getQuestionID ()
+    {
+        return idQuestion;
+    }
 
    // called by LoaderManager when the Loader is being reset
    @Override

@@ -103,6 +103,24 @@ public class MainActivity extends AppCompatActivity
       transaction.commit(); // causes AddEditFragment to display
    }
 
+   private void displayRatingFragment(int viewID, Uri contactUri) {
+      RatingFragment ratingFragment = new RatingFragment();
+
+      // if editing existing contact, provide contactUri as an argument
+      if (contactUri != null) {
+         Bundle arguments = new Bundle();
+         arguments.putParcelable(CONTACT_URI, contactUri);
+         ratingFragment.setArguments(arguments);
+      }
+
+      // use a FragmentTransaction to display the AddEditFragment
+      FragmentTransaction transaction =
+              getSupportFragmentManager().beginTransaction();
+      transaction.replace(viewID, ratingFragment);
+      transaction.addToBackStack(null);
+      transaction.commit(); // causes AddEditFragment to display
+   }
+
    // return to contact list when displayed contact deleted
    @Override
    public void onContactDeleted() {
@@ -118,6 +136,12 @@ public class MainActivity extends AppCompatActivity
          displayAddEditFragment(R.id.fragmentContainer, contactUri);
       else // tablet
          displayAddEditFragment(R.id.rightPaneContainer, contactUri);
+   }
+
+   //Joe: display the AddEditFragment to rate the existing question
+   public void onRatingClicked(Uri contactUri) {
+      if (findViewById(R.id.fragmentContainer) != null)
+         displayRatingFragment(R.id.fragmentContainer, contactUri);
    }
 
    // update GUI after new contact or updated contact saved

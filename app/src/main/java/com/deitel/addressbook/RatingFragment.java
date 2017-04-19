@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -42,6 +43,7 @@ import com.deitel.addressbook.MainActivity;
 import com.deitel.addressbook.R;
 import com.deitel.addressbook.Utility;
 import com.deitel.addressbook.data.DatabaseDescription.Contact;
+import com.deitel.addressbook.data.QuestionDatabaseDatabaseHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,9 +55,10 @@ public class RatingFragment extends Fragment
    implements LoaderManager.LoaderCallbacks<Cursor> {
 
    // defines callback method implemented by MainActivity
+    //TODO go back to mainpage
    public interface RatingFragmentListener {
       // called when contact is saved
-      void onAddEditCompleted(Uri contactUri);
+      void onRatingClicked(Uri contactUri);
    }
 
    // constant used to identify the Loader
@@ -73,7 +76,7 @@ public class RatingFragment extends Fragment
    private boolean submitClicked = false;
    private CheckBox chkFinished;
    private boolean finishConfirmed = false;
-   private int id;
+   private int idFromDetail;
 
 
    // set RatingFragmentListener when Fragment attached
@@ -93,8 +96,6 @@ public class RatingFragment extends Fragment
    // called when Fragment's view needs to be created
    @Override
    public View onCreateView(
-           //TODO DATA JAVA->NEW JAVA->LAYOUT->ADDEDIT->DETAILED category, title, body, rating, status
-           //TODO RATING BAR, STATUS PAGE, build based on add/edit fragment
            //https://github.com/DreaminginCodeZH/MaterialRatingBar
            //status =  checkbox
            //use linear layout
@@ -183,6 +184,10 @@ public class RatingFragment extends Fragment
       if (submitClicked)  {
          // use Activity's ContentResolver to invoke
          // insert on the QuestionDatabaseContentProvider
+         idFromDetail = 1;
+         QuestionDatabaseDatabaseHelper dbHelper = new QuestionDatabaseDatabaseHelper(getContext());
+         dbHelper.getWritableDatabase().update(Contact.TABLE_NAME, contentValues, "_id="+idFromDetail, null);
+          getContext().getContentResolver().update(contactUri, contentValues, "_id="+idFromDetail, null);
          //myDB.update(contacts, contentValues, "_id="+id, null);
       }
    }
