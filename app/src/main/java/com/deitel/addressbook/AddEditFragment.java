@@ -79,6 +79,7 @@ public class AddEditFragment extends Fragment
    private Button btnSelect;
    private ImageView ivImage;
    private String userChoosenTask;
+    private boolean imgInsert = false;
 
    // set AddEditFragmentListener when Fragment attached
    @Override
@@ -242,17 +243,9 @@ public class AddEditFragment extends Fragment
       //Create a utility class
       DbBitmapUtility converter = new DbBitmapUtility();
       //Get currently saved image
-      Boolean fileFound = true;
-      Bitmap bitmap = null;
-      try {
-         bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
-      }
-      catch(Resources.NotFoundException e)
-      {
-         fileFound = false;
-      }
-      //Convert to sqlite format
-      if (fileFound) {
+      if (imgInsert) {
+          Bitmap bitmap = null;
+          bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
          byte[] converted = converter.getBytes(bitmap);
          contentValues.put(Contact.COLUMN_PHOTO,
                  converted);
@@ -341,9 +334,11 @@ public class AddEditFragment extends Fragment
          //JOE: set retrieved image
          //JOE: Create a utility class
          DbBitmapUtility converter = new DbBitmapUtility();
-         ivImage.setImageBitmap(
-                 converter.getImage(data.getBlob(photoIndex)));
 
+          if(data.getBlob(photoIndex)!=null) {
+              ivImage.setImageBitmap(
+                      converter.getImage(data.getBlob(photoIndex)));
+          }
          updateSaveButtonFAB();
       }
    }
@@ -444,6 +439,7 @@ public class AddEditFragment extends Fragment
       }
 
       ivImage.setImageBitmap(thumbnail);
+       imgInsert=true;
    }
 
    @SuppressWarnings("deprecation")
@@ -459,6 +455,7 @@ public class AddEditFragment extends Fragment
       }
 
       ivImage.setImageBitmap(bm);
+       imgInsert = true;
    }
 }
 

@@ -242,8 +242,12 @@ public class DetailFragment extends Fragment
          //Joe: set retrieved image
          //Joe: Create a utility class
          DbBitmapUtility converter = new DbBitmapUtility();
-         ivImage.setImageBitmap(
-                 converter.getImage(data.getBlob(photoIndex)));
+
+
+          if(data.getBlob(photoIndex)!=null) {
+              ivImage.setImageBitmap(
+                      converter.getImage(data.getBlob(photoIndex)));
+          }
 
           //Joe: get rating and status
           ratingTextView.setText(Integer.toString(data.getInt(ratingIndex)));
