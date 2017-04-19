@@ -25,6 +25,9 @@ public class DatabaseDescription {
          BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
 
       // column names for contacts table's columns
+      public static final String COLUMN_TIME_ASKED = "time_asked";
+      public static final String COLUMN_TIME_CLOSED = "time_closed";
+      public static final String COLUMN_TIME_ELAPSED = "time_elapsed";
       public static final String COLUMN_NAME = "name";
 
       public static final String COLUMN_PHONE = "phone";
@@ -33,6 +36,7 @@ public class DatabaseDescription {
       public static final String COLUMN_TITLE = "title";
       public static final String COLUMN_QUESTION = "question";
        public static final String COLUMN_PHOTO = "photo";
+
        public static final String COLUMN_RATING = "rating";
        public static final String COLUMN_STATUS = "status";
       // creates a Uri for a specific contact

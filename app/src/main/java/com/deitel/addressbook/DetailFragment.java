@@ -26,6 +26,10 @@ import android.widget.TextView;
 
 import com.deitel.addressbook.data.DatabaseDescription.Contact;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class DetailFragment extends Fragment
    implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -49,10 +53,13 @@ public class DetailFragment extends Fragment
    private TextView titleTextView; // displays contact's street
    private TextView questionTextView; // displays contact's city
    private ImageView ivImage;
-    private TextView ratingTextView; // displays contact's street
-    private TextView statusTextView; // displays contact's city
-
-   // set DetailFragmentListener when fragment attached
+    private TextView ratingTextView;
+    private TextView statusTextView;
+   private TextView timeAskedTextView;
+   private TextView timeClosedTextView;
+    private TextView timeElapsedTextView;
+    public final SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+    // set DetailFragmentListener when fragment attached
    @Override
    public void onAttach(Context context) {
       super.onAttach(context);
@@ -95,6 +102,9 @@ public class DetailFragment extends Fragment
        ratingTextView = (TextView) view.findViewById(R.id.ratingTextView);
        statusTextView = (TextView) view.findViewById(R.id.statusTextView);
 
+       timeAskedTextView = (TextView) view.findViewById(R.id.timeAskedTextView);
+       timeClosedTextView = (TextView) view.findViewById(R.id.timeClosedTextView);
+       timeElapsedTextView = (TextView) view.findViewById(R.id.timeElapsedTextView);
 
       // load the contact
       getLoaderManager().initLoader(CONTACT_LOADER, null, this);
@@ -203,6 +213,9 @@ public class DetailFragment extends Fragment
          int photoIndex = data.getColumnIndex(Contact.COLUMN_PHOTO);
           int ratingIndex = data.getColumnIndex(Contact.COLUMN_RATING);
           int statusIndex = data.getColumnIndex(Contact.COLUMN_STATUS);
+          int timeAskedIndex = data.getColumnIndex(Contact.COLUMN_TIME_ASKED);
+          int timeClosedIndex = data.getColumnIndex(Contact.COLUMN_TIME_CLOSED);
+          int timeElapsedIndex = data.getColumnIndex(Contact.COLUMN_TIME_ELAPSED);
 
          // fill TextViews with the retrieved data
          nameTextView.setText(data.getString(nameIndex));
@@ -211,13 +224,13 @@ public class DetailFragment extends Fragment
          categoryTextView.setText(data.getString(categoryIndex));
          titleTextView.setText(data.getString(titleIndex));
          questionTextView.setText(data.getString(questionIndex));
-         //JOE: set retrieved image
-         //JOE: Create a utility class
+         //Joe: set retrieved image
+         //Joe: Create a utility class
          DbBitmapUtility converter = new DbBitmapUtility();
          ivImage.setImageBitmap(
                  converter.getImage(data.getBlob(photoIndex)));
 
-            //JOE: get rating and status
+          //Joe: get rating and status
           ratingTextView.setText(Integer.toString(data.getInt(ratingIndex)));
 
           if (data.getInt(statusIndex) == 1)
@@ -228,6 +241,34 @@ public class DetailFragment extends Fragment
           {
               statusTextView.setText("Open");
           }
+          Date resultdate = new Date(data.getInt(timeAskedIndex));
+          timeAskedTextView.setText(sdf.format(resultdate));
+
+          if (data.getInt(timeClosedIndex) == 0)
+          {
+              timeClosedTextView.setText("");
+          }
+          else
+          {
+              timeClosedTextView.setText(sdf.format(new Date(data.getInt(timeClosedIndex))));
+          }
+
+          if (data.getInt(timeClosedIndex) == 0)
+          {
+              timeElapsedTextView.setText("");
+          }
+          else
+          {
+              long diffInMis = new Date(data.getInt(timeClosedIndex)).getTime() - new Date(data.getInt(timeAskedIndex)).getTime();
+              //long diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMis);
+              //long diffInHour = TimeUnit.MILLISECONDS.toHours(diffInMis);
+              long diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMis);
+              timeElapsedTextView.setText(String.valueOf(diffInDays));
+          }
+
+
+
+
       }
    }
 

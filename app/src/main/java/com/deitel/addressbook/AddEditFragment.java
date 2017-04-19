@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -221,19 +222,33 @@ public class AddEditFragment extends Fragment
       contentValues.put(Contact.COLUMN_QUESTION,
          questionTextInputLayout.getEditText().getText().toString());
 
+      //time
+      contentValues.put(Contact.COLUMN_TIME_ASKED,(int) System.currentTimeMillis());
       //default value of rating to 0 and status to 0
+       contentValues.put(Contact.COLUMN_TIME_CLOSED,Integer.parseInt("0"));
+       contentValues.put(Contact.COLUMN_TIME_ELAPSED,Integer.parseInt("0"));
       contentValues.put(Contact.COLUMN_RATING,Integer.parseInt("0"));
       contentValues.put(Contact.COLUMN_STATUS,Integer.parseInt("0"));
 
-      //JOE: Create a utility class
+      //Store photo
+      //Create a utility class
       DbBitmapUtility converter = new DbBitmapUtility();
-      //JOE: Get currently saved image
-      Bitmap bitmap = ((BitmapDrawable)ivImage.getDrawable()).getBitmap();
-      //JOE: Convert to sqlite format
-      byte[] converted = converter.getBytes(bitmap);
-      contentValues.put(Contact.COLUMN_PHOTO,
-              converted);
-
+      //Get currently saved image
+      Boolean fileFound = true;
+      Bitmap bitmap = null;
+      try {
+         bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
+      }
+      catch(Resources.NotFoundException e)
+      {
+         fileFound = false;
+      }
+      //Convert to sqlite format
+      if (fileFound) {
+         byte[] converted = converter.getBytes(bitmap);
+         contentValues.put(Contact.COLUMN_PHOTO,
+                 converted);
+      }
       if (addingNewContact) {
          // use Activity's ContentResolver to invoke
          // insert on the QuestionDatabaseContentProvider
