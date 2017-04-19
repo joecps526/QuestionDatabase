@@ -55,7 +55,7 @@ public class DetailFragment extends Fragment
    private TextView categoryTextView;
    private TextView titleTextView; // displays contact's street
    private TextView questionTextView; // displays contact's city
-   private ImageView ivImage;
+   private TouchImageView ivImage;
     private TextView ratingTextView;
     private TextView statusTextView;
    private TextView timeAskedTextView;
@@ -105,7 +105,7 @@ public class DetailFragment extends Fragment
       categoryTextView = (TextView) view.findViewById(R.id.categoryTextView);
       titleTextView = (TextView) view.findViewById(R.id.titleTextView);
       questionTextView = (TextView) view.findViewById(R.id.questionTextView);
-      ivImage = (ImageView) view.findViewById(R.id.ivImage);
+      ivImage = (TouchImageView) view.findViewById(R.id.ivImage);
        ratingTextView = (TextView) view.findViewById(R.id.ratingTextView);
        statusTextView = (TextView) view.findViewById(R.id.statusTextView);
 
@@ -281,10 +281,6 @@ public class DetailFragment extends Fragment
               timeElapsedTextView.setText(String.valueOf(diffInDays));
           }
           **/
-
-
-
-
       }
    }
     //TODO Pass the id to IM
