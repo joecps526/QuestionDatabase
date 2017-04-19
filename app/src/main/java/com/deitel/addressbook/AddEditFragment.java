@@ -43,6 +43,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class AddEditFragment extends Fragment
    implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -61,6 +63,7 @@ public class AddEditFragment extends Fragment
    private boolean addingNewContact = true; // adding (true) or editing
 
    // EditTexts for contact information
+   private TextInputLayout userNameTextInputLayout;
    private TextInputLayout nameTextInputLayout;
    private TextInputLayout phoneTextInputLayout;
    private TextInputLayout emailTextInputLayout;
@@ -107,6 +110,8 @@ public class AddEditFragment extends Fragment
       // inflate GUI and get references to EditTexts
       View view =
          inflater.inflate(R.layout.fragment_add_edit, container, false);
+       userNameTextInputLayout =
+               (TextInputLayout) view.findViewById(R.id.userNameTextInputLayout);
       nameTextInputLayout =
          (TextInputLayout) view.findViewById(R.id.nameTextInputLayout);
       nameTextInputLayout.getEditText().addTextChangedListener(
@@ -207,6 +212,8 @@ public class AddEditFragment extends Fragment
    private void saveContact() {
       // create ContentValues object containing contact's key-value pairs
       ContentValues contentValues = new ContentValues();
+       contentValues.put(Contact.COLUMN_USER_NAME,
+               userNameTextInputLayout.getEditText().getText().toString());
       contentValues.put(Contact.COLUMN_NAME,
          nameTextInputLayout.getEditText().getText().toString());
       contentValues.put(Contact.COLUMN_PHONE,
@@ -223,10 +230,11 @@ public class AddEditFragment extends Fragment
          questionTextInputLayout.getEditText().getText().toString());
 
       //time
-      contentValues.put(Contact.COLUMN_TIME_ASKED,(int) System.currentTimeMillis());
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      contentValues.put(Contact.COLUMN_TIME_ASKED,sdf.format(Calendar.getInstance().getTime()));
       //default value of rating to 0 and status to 0
-       contentValues.put(Contact.COLUMN_TIME_CLOSED,Integer.parseInt("0"));
-       contentValues.put(Contact.COLUMN_TIME_ELAPSED,Integer.parseInt("0"));
+       contentValues.put(Contact.COLUMN_TIME_CLOSED,"");
+       contentValues.put(Contact.COLUMN_TIME_ELAPSED,"");
       contentValues.put(Contact.COLUMN_RATING,Integer.parseInt("0"));
       contentValues.put(Contact.COLUMN_STATUS,Integer.parseInt("0"));
 
@@ -307,6 +315,7 @@ public class AddEditFragment extends Fragment
       // if the contact exists in the database, display its data
       if (data != null && data.moveToFirst()) {
          // get the column index for each data item
+          int userNameIndex = data.getColumnIndex(Contact.COLUMN_USER_NAME);
          int nameIndex = data.getColumnIndex(Contact.COLUMN_NAME);
          int phoneIndex = data.getColumnIndex(Contact.COLUMN_PHONE);
          int emailIndex = data.getColumnIndex(Contact.COLUMN_EMAIL);
@@ -317,6 +326,8 @@ public class AddEditFragment extends Fragment
          int photoIndex = data.getColumnIndex(Contact.COLUMN_PHOTO);
 
          // fill EditTexts with the retrieved data
+          userNameTextInputLayout.getEditText().setText(
+                  data.getString(userNameIndex));
          nameTextInputLayout.getEditText().setText(
             data.getString(nameIndex));
          phoneTextInputLayout.getEditText().setText(

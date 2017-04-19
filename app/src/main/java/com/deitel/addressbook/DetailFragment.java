@@ -49,6 +49,7 @@ public class DetailFragment extends Fragment
    private DetailFragmentListener listener; // MainActivity
    private Uri contactUri; // Uri of selected contact
 
+    private TextView userNameTextView; // displays contact's name
    private TextView nameTextView; // displays contact's name
    private TextView phoneTextView; // displays contact's phone
    private TextView emailTextView; // displays contact's email
@@ -96,6 +97,8 @@ public class DetailFragment extends Fragment
          inflater.inflate(R.layout.fragment_detail, container, false);
 
       // get the EditTexts
+       //TODO add user name in detail fragment
+       //userNameTextView = (TextView) view.findViewById(R.id.userNameTextView);
       nameTextView = (TextView) view.findViewById(R.id.nameTextView);
       phoneTextView = (TextView) view.findViewById(R.id.phoneTextView);
       emailTextView = (TextView) view.findViewById(R.id.emailTextView);
@@ -279,6 +282,7 @@ public class DetailFragment extends Fragment
 
       }
    }
+    //TODO Pass the id to IM
     public int getQuestionID ()
     {
         return idQuestion;

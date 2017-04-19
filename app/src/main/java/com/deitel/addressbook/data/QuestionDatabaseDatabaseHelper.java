@@ -24,7 +24,8 @@ public class QuestionDatabaseDatabaseHelper extends SQLiteOpenHelper {
       final String CREATE_CONTACTS_TABLE =
          "CREATE TABLE " + Contact.TABLE_NAME + "(" +
          Contact._ID + " integer primary key, " +
-         Contact.COLUMN_TIME_ASKED + " INT, " +
+         Contact.COLUMN_TIME_ASKED + " TEXT, " +
+           Contact.COLUMN_USER_NAME + " TEXT, " +
          Contact.COLUMN_NAME + " TEXT, " +
          Contact.COLUMN_PHONE + " TEXT, " +
          Contact.COLUMN_EMAIL + " TEXT, " +
@@ -33,8 +34,8 @@ public class QuestionDatabaseDatabaseHelper extends SQLiteOpenHelper {
          Contact.COLUMN_QUESTION + " TEXT, " +
          Contact.COLUMN_PHOTO + " BLOB, " +
          Contact.COLUMN_RATING + " INT, " +
-         Contact.COLUMN_TIME_CLOSED + " INT, " +
-         Contact.COLUMN_TIME_ELAPSED + " INT, " +
+         Contact.COLUMN_TIME_CLOSED + " TEXT, " +
+         Contact.COLUMN_TIME_ELAPSED + " TEXT, " +
          Contact.COLUMN_STATUS + " INT);" ;
 
       db.execSQL(CREATE_CONTACTS_TABLE); // create the contacts table

@@ -28,6 +28,7 @@ public class DatabaseDescription {
       public static final String COLUMN_TIME_ASKED = "time_asked";
       public static final String COLUMN_TIME_CLOSED = "time_closed";
       public static final String COLUMN_TIME_ELAPSED = "time_elapsed";
+      public static final String COLUMN_USER_NAME = "user_name";
       public static final String COLUMN_NAME = "name";
 
       public static final String COLUMN_PHONE = "phone";

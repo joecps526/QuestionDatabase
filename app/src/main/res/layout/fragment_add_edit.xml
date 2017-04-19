@@ -13,6 +13,20 @@
          android:layout_height="wrap_content">
 
          <android.support.design.widget.TextInputLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/userNameTextInputLayout">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText0"
+                android:hint="@string/hint_user_name_required"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords|textPersonName"/>
+         </android.support.design.widget.TextInputLayout>
+
+         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/nameTextInputLayout">

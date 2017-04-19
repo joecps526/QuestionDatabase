@@ -18,24 +18,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
+
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.Spinner;
+
+import android.widget.RatingBar;
+
 import android.widget.Toast;
 
 import com.deitel.addressbook.DbBitmapUtility;
@@ -43,17 +37,12 @@ import com.deitel.addressbook.MainActivity;
 import com.deitel.addressbook.R;
 import com.deitel.addressbook.Utility;
 import com.deitel.addressbook.data.DatabaseDescription.Contact;
-import com.deitel.addressbook.data.QuestionDatabaseDatabaseHelper;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
-public class RatingFragment extends Fragment
-   implements LoaderManager.LoaderCallbacks<Cursor> {
 
+public class RatingFragment extends Fragment {
    // defines callback method implemented by MainActivity
     //TODO go back to mainpage LISTENER,RATING
    public interface RatingFragmentListener {
@@ -77,6 +66,8 @@ public class RatingFragment extends Fragment
    private CheckBox chkFinished;
    private boolean finishConfirmed = false;
    private int idFromDetail;
+    private RatingBar ratingBar;
+    private int txtRatingValue;
 
 
    // set RatingFragmentListener when Fragment attached
@@ -96,9 +87,7 @@ public class RatingFragment extends Fragment
    // called when Fragment's view needs to be created
    @Override
    public View onCreateView(
-           //https://github.com/DreaminginCodeZH/MaterialRatingBar
-           //status =  checkbox
-           //use linear layout
+
       LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
       super.onCreateView(inflater, container, savedInstanceState);
@@ -118,6 +107,17 @@ public class RatingFragment extends Fragment
       chkFinished = (CheckBox) view.findViewById(R.id.checkBox);
       chkFinished.setOnClickListener(finishedBoxChecked);
 
+       //set rating bar listener
+       ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+       ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+           public void onRatingChanged(RatingBar ratingBar, float rating,
+                                       boolean fromUser) {
+
+               txtRatingValue = (int)rating;
+
+           }
+       });
+
 
 
       // used to display SnackBars with brief messages
@@ -131,10 +131,6 @@ public class RatingFragment extends Fragment
          contactUri = arguments.getParcelable(MainActivity.CONTACT_URI);
       }
 
-      // if editing an existing contact, create Loader to get the contact
-      if (contactUri != null)
-         getLoaderManager().initLoader(CONTACT_LOADER, null, this);
-
       return view;
    }
 
@@ -144,6 +140,8 @@ public class RatingFragment extends Fragment
       new View.OnClickListener() {
          @Override
          public void onClick(View v) {
+             Toast.makeText(getContext(),
+                     "The results are saved.", Toast.LENGTH_LONG).show();
              submitClicked=true;
             saveRating(); // save contact to the database
          }
@@ -173,65 +171,28 @@ public class RatingFragment extends Fragment
          contentValues.put(Contact.COLUMN_STATUS,
                  Integer.parseInt("1"));
       }
-      contentValues.put(Contact.COLUMN_RATING,Integer.parseInt("0"));
+       else
+      {
+          contentValues.put(Contact.COLUMN_STATUS,
+                  Integer.parseInt("0"));
+      }
+      contentValues.put(Contact.COLUMN_RATING,txtRatingValue);
 
       //default value of rating to 0 and status to 0
-      contentValues.put(Contact.COLUMN_TIME_CLOSED,System.currentTimeMillis());
-      contentValues.put(Contact.COLUMN_RATING,Integer.parseInt("0"));
+       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       contentValues.put(Contact.COLUMN_TIME_CLOSED,sdf.format(Calendar.getInstance().getTime()));
+
         //refer back to addeditfragment
       if (submitClicked)  {
-         // use Activity's ContentResolver to invoke
          // insert on the QuestionDatabaseContentProvider
+         //TODO Get the id from IM
          idFromDetail = 1;
-         //QuestionDatabaseDatabaseHelper dbHelper = new QuestionDatabaseDatabaseHelper(getContext());
-         //dbHelper.getWritableDatabase().update(Contact.TABLE_NAME, contentValues, "_id="+idFromDetail, null);
           getContext().getContentResolver().update(contactUri, contentValues, "_id="+idFromDetail, null);
          //myDB.update(contacts, contentValues, "_id="+id, null);
       }
    }
 
-   // called by LoaderManager to create a Loader
-   @Override
-   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-      // create an appropriate CursorLoader based on the id argument;
-      // only one Loader in this fragment, so the switch is unnecessary
-      switch (id) {
-         case CONTACT_LOADER:
-            return new CursorLoader(getActivity(),
-               contactUri, // Uri of contact to display
-               null, // null projection returns all columns
-               null, // null selection returns all rows
-               null, // no selection arguments
-               null); // sort order
-         default:
-            return null;
-      }
-   }
 
-   // called by LoaderManager when loading completes
-   @Override
-   public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-      // if the contact exists in the database, display its data
-      if (data != null && data.moveToFirst()) {
-         // get the column index for each data item
-         int nameIndex = data.getColumnIndex(Contact.COLUMN_NAME);
-         int phoneIndex = data.getColumnIndex(Contact.COLUMN_PHONE);
-         int emailIndex = data.getColumnIndex(Contact.COLUMN_EMAIL);
-         int titleIndex = data.getColumnIndex(Contact.COLUMN_TITLE);
-         int questionIndex = data.getColumnIndex(Contact.COLUMN_QUESTION);
-
-         //JOE: get the column index
-         int photoIndex = data.getColumnIndex(Contact.COLUMN_PHOTO);
-
-         // fill EditTexts with the retrieved data
-         //nameTextInputLayout.getEditText().setText(data.getString(nameIndex));
-
-      }
-   }
-
-   // called by LoaderManager when the Loader is being reset
-   @Override
-   public void onLoaderReset(Loader<Cursor> loader) { }
 
 
 }

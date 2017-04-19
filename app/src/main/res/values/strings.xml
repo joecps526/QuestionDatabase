@@ -3,6 +3,7 @@
    <string name="menuitem_edit">Edit</string>
    <string name="menuitem_delete">Delete</string>
    <string name="menuitem_rate">Rate</string>
+   <string name="hint_user_name_required">User Name (Required)</string>
    <string name="hint_name_required">Name (Required)</string>
    <string name="hint_email">E-Mail</string>
    <string name="hint_phone">Phone</string>
