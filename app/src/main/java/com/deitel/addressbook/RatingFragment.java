@@ -55,7 +55,7 @@ public class RatingFragment extends Fragment
    implements LoaderManager.LoaderCallbacks<Cursor> {
 
    // defines callback method implemented by MainActivity
-    //TODO go back to mainpage
+    //TODO go back to mainpage LISTENER,RATING
    public interface RatingFragmentListener {
       // called when contact is saved
       void onRatingClicked(Uri contactUri);
@@ -64,7 +64,7 @@ public class RatingFragment extends Fragment
    // constant used to identify the Loader
    private static final int CONTACT_LOADER = 0;
 
-   private RatingFragmentListener listener; // MainActivity
+   //private RatingFragmentListener listener; // MainActivity
    private Uri contactUri; // Uri of selected contact
 
 
@@ -83,14 +83,14 @@ public class RatingFragment extends Fragment
    @Override
    public void onAttach(Context context) {
       super.onAttach(context);
-      listener = (RatingFragmentListener) context;
+      //listener = (RatingFragmentListener) context;
    }
 
    // remove RatingFragmentListener when Fragment detached
    @Override
    public void onDetach() {
       super.onDetach();
-      listener = null;
+      //listener = null;
    }
 
    // called when Fragment's view needs to be created
@@ -106,11 +106,9 @@ public class RatingFragment extends Fragment
 
       // inflate GUI and get references to EditTexts
       View view =
-         inflater.inflate(R.layout.fragment_add_edit, container, false);
+         inflater.inflate(R.layout.fragment_rating, container, false);
       chkFinished =
          (CheckBox) view.findViewById(R.id.checkBox);
-
-
 
       // set FloatingActionButton's event listener
       btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
@@ -185,8 +183,8 @@ public class RatingFragment extends Fragment
          // use Activity's ContentResolver to invoke
          // insert on the QuestionDatabaseContentProvider
          idFromDetail = 1;
-         QuestionDatabaseDatabaseHelper dbHelper = new QuestionDatabaseDatabaseHelper(getContext());
-         dbHelper.getWritableDatabase().update(Contact.TABLE_NAME, contentValues, "_id="+idFromDetail, null);
+         //QuestionDatabaseDatabaseHelper dbHelper = new QuestionDatabaseDatabaseHelper(getContext());
+         //dbHelper.getWritableDatabase().update(Contact.TABLE_NAME, contentValues, "_id="+idFromDetail, null);
           getContext().getContentResolver().update(contactUri, contentValues, "_id="+idFromDetail, null);
          //myDB.update(contacts, contentValues, "_id="+id, null);
       }

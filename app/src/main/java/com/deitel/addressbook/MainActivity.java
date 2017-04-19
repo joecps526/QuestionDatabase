@@ -11,7 +11,8 @@ import android.support.v7.widget.Toolbar;
 public class MainActivity extends AppCompatActivity
    implements ContactsFragment.ContactsFragmentListener,
    DetailFragment.DetailFragmentListener,
-   AddEditFragment.AddEditFragmentListener {
+   AddEditFragment.AddEditFragmentListener
+{
 
    // key for storing a contact's Uri in a Bundle passed to a fragment
    public static final String CONTACT_URI = "contact_uri";
