@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.deitel.addressbook.data.DatabaseDescription.Contact;
@@ -61,9 +60,10 @@ public class DetailFragment extends Fragment
     private TextView statusTextView;
    private TextView timeAskedTextView;
    private TextView timeClosedTextView;
-    private TextView timeElapsedTextView;
+    //private TextView timeElapsedTextView;
     public final SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
     private int idQuestion;
+
     // set DetailFragmentListener when fragment attached
    @Override
    public void onAttach(Context context) {
@@ -98,7 +98,7 @@ public class DetailFragment extends Fragment
 
       // get the EditTexts
        //TODO add user name in detail fragment
-       //userNameTextView = (TextView) view.findViewById(R.id.userNameTextView);
+       userNameTextView = (TextView) view.findViewById(R.id.userNameTextView);
       nameTextView = (TextView) view.findViewById(R.id.nameTextView);
       phoneTextView = (TextView) view.findViewById(R.id.phoneTextView);
       emailTextView = (TextView) view.findViewById(R.id.emailTextView);
@@ -111,11 +111,13 @@ public class DetailFragment extends Fragment
 
        timeAskedTextView = (TextView) view.findViewById(R.id.timeAskedTextView);
        timeClosedTextView = (TextView) view.findViewById(R.id.timeClosedTextView);
-       timeElapsedTextView = (TextView) view.findViewById(R.id.timeElapsedTextView);
+       //timeElapsedTextView = (TextView) view.findViewById(R.id.timeElapsedTextView);
 
       // load the contact
       getLoaderManager().initLoader(CONTACT_LOADER, null, this);
       return view;
+
+
    }
 
    // display this fragment's menu items
@@ -213,6 +215,7 @@ public class DetailFragment extends Fragment
       // if the contact exists in the database, display its data
       if (data != null && data.moveToFirst()) {
          // get the column index for each data item
+          int userNameIndex = data.getColumnIndex(Contact.COLUMN_USER_NAME);
          int nameIndex = data.getColumnIndex(Contact.COLUMN_NAME);
          int phoneIndex = data.getColumnIndex(Contact.COLUMN_PHONE);
          int emailIndex = data.getColumnIndex(Contact.COLUMN_EMAIL);
@@ -229,6 +232,7 @@ public class DetailFragment extends Fragment
           idQuestion = data.getColumnIndex(Contact._ID);
 
          // fill TextViews with the retrieved data
+          userNameTextView.setText(data.getString(userNameIndex));
          nameTextView.setText(data.getString(nameIndex));
          phoneTextView.setText(data.getString(phoneIndex));
          emailTextView.setText(data.getString(emailIndex));
@@ -263,7 +267,7 @@ public class DetailFragment extends Fragment
           {
               timeClosedTextView.setText(sdf.format(new Date(data.getInt(timeClosedIndex))));
           }
-
+            /*ELASPED TIME
           if (data.getInt(timeClosedIndex) == 0)
           {
               timeElapsedTextView.setText("");
@@ -276,6 +280,7 @@ public class DetailFragment extends Fragment
               long diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMis);
               timeElapsedTextView.setText(String.valueOf(diffInDays));
           }
+          **/
 
 
 
@@ -291,6 +296,7 @@ public class DetailFragment extends Fragment
    // called by LoaderManager when the Loader is being reset
    @Override
    public void onLoaderReset(Loader<Cursor> loader) { }
+
 }
 
 

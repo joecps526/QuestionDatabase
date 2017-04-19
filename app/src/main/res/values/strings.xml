@@ -10,6 +10,7 @@
    <string name="hint_category">Category</string>
    <string name="hint_title">Title</string>
    <string name="hint_question">Question</string>
+   <string name="label_user_name">User Name:</string>
    <string name="label_name">Name:</string>
    <string name="label_email">E-Mail:</string>
    <string name="label_phone">Phone:</string>
@@ -42,4 +43,5 @@
       <item>@string/business</item>
       <item>@string/engineering</item>
    </string-array>
+   <string name="description_zoom_touch_close">Expanded image (touch to close)</string>
 </resources>
